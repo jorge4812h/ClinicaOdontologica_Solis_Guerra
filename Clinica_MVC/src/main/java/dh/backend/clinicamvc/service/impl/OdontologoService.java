@@ -30,8 +30,8 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public Odontologo registrarOdontologo(Odontologo odontologo) throws BadRequestException {
-        if (odontologo.getApellido() ==null || odontologo.getApellido() == null) {
-            throw new BadRequestException("{\"message\": \"paciente no pudo ser registrado\"}");
+        if (odontologo.getNombre() ==null || odontologo.getApellido() == null) {
+            throw new BadRequestException("{\"message\": \"Odontologo no pudo ser registrado\"}");
         } else {
             Odontologo odontologoRegistrado=odontologoRepository.save(odontologo);
             return odontologoRegistrado;

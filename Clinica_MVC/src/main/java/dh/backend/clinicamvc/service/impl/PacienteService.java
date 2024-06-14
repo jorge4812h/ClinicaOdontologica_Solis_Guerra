@@ -26,23 +26,20 @@ public class PacienteService implements IPacienteService {
     }
 
     public Paciente registrarPaciente(Paciente paciente) throws BadRequestException {
-
-        if (paciente.getApellido() ==null || paciente.getApellido() == null) {
-
-            throw new BadRequestException("{\"message\": \"paciente no pudo ser registrado\"}");
+        if (paciente.getNombre() ==null || paciente.getApellido() == null) {
+            LOGGER.error("Paciente no pudo ser registrado");
+            throw new BadRequestException("{\"message\": \"Paciente no pudo ser registrado\"}");
         } else {
-            LOGGER.info("Registro de Paciente");
             Paciente pacienteRegistrado= pacienteRepository.save(paciente);
+            LOGGER.info("Paciente Registrado");
             return pacienteRegistrado;
         }
-
     }
 
     public Optional<Paciente> buscarPorId(Integer id) {
-        LOGGER.info("Paciente encontrado: ");
         return pacienteRepository.findById(id);
-    }
 
+    }
     public List<Paciente> buscarTodos() {
         return pacienteRepository.findAll();
     }
@@ -50,23 +47,24 @@ public class PacienteService implements IPacienteService {
     @Override
     public void actualizarPaciente(Paciente paciente) throws ResourceNotFoundException {
         Optional<Paciente> pacienteOptional=buscarPorId(paciente.getId());
-        if (pacienteOptional.isPresent()) {
-            pacienteRepository.save(paciente);
-        } else {
+        if (pacienteOptional.isEmpty()) {
+            LOGGER.info("Paciente no pudo ser actualizado.");
             throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");
+        } else {
+            LOGGER.info("Paciente actualizado.");
+            pacienteRepository.save(paciente);
         }
-
-
     }
-
     // Metodo eliminar Paciente que puede lanzar una excepcion
     @Override
     public void eliminarPaciente(Integer id) throws ResourceNotFoundException {
         Optional<Paciente> pacienteOptional = buscarPorId(id);
         if (pacienteOptional.isPresent()) {
             pacienteRepository.deleteById(id);
+            LOGGER.info("Paciente Eliminado");
         } else {
             //Accion de lanzamiento de Excepcion.
+            LOGGER.error("Paciente no encontrado");
             throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");
         }
     }
