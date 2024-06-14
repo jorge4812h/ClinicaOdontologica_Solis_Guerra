@@ -16,10 +16,10 @@ public class Turno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Paciente paciente;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     Odontologo odontologo;
 
     LocalDate fecha;

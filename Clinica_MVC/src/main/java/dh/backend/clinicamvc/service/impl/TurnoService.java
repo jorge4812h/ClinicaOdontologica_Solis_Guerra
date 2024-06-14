@@ -7,11 +7,14 @@ import dh.backend.clinicamvc.dto.response.TurnoResponseDTO;
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.entity.Paciente;
 import dh.backend.clinicamvc.entity.Turno;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.repository.IOdontologoRepository;
 import dh.backend.clinicamvc.repository.IPacienteRepository;
 import dh.backend.clinicamvc.repository.ITurnoRepository;
 import dh.backend.clinicamvc.service.ITurnoService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,24 +37,25 @@ public class TurnoService implements ITurnoService {
         this.modelMapper = modelMapper;
     }
 
-
-
     @Override
-    public TurnoResponseDTO registrarTurno(TurnoRequestDTO turnoRequestDTO) {
+    public TurnoResponseDTO registrarTurno(TurnoRequestDTO turnoRequestDTO) throws BadRequestException {
         Optional<Paciente> paciente=pacienteRepository.findById(turnoRequestDTO.getPaciente_id());
         Optional<Odontologo> odontologo=odontologoRepository.findById(turnoRequestDTO.getOdontologo_id());
         Turno turnoARegistrar=new Turno();
         Turno turnoGuardado=null;
         TurnoResponseDTO turnoADevolver=null;
-        if (odontologo.isPresent() && paciente.isPresent()) {
+        if (paciente.isPresent() && odontologo.isPresent()) {
+
             turnoARegistrar.setPaciente(paciente.get());
             turnoARegistrar.setOdontologo(odontologo.get());
             turnoARegistrar.setFecha(turnoRequestDTO.getFecha());
-
             turnoGuardado=turnoRepository.save(turnoARegistrar);
             turnoADevolver=mapToResponseDto(turnoGuardado);
+            return turnoADevolver;
+        } else {
+            throw new BadRequestException("{\"message\": \"paciente u odontologo no existe\"}");
         }
-        return turnoADevolver;
+
     }
 
     @Override

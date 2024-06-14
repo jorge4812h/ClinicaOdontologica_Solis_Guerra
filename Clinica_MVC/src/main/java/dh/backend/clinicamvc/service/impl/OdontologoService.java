@@ -1,8 +1,12 @@
 package dh.backend.clinicamvc.service.impl;
 
 import dh.backend.clinicamvc.entity.Odontologo;
+import dh.backend.clinicamvc.exception.BadRequestException;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.repository.IOdontologoRepository;
 import dh.backend.clinicamvc.service.IOdontologoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +29,14 @@ public class OdontologoService implements IOdontologoService {
     }
 
     @Override
-    public Odontologo registrarOdontologo(Odontologo odontologo) {
-        return odontologoRepository.save(odontologo);
+    public Odontologo registrarOdontologo(Odontologo odontologo) throws BadRequestException {
+        if (odontologo.getApellido() ==null || odontologo.getApellido() == null) {
+            throw new BadRequestException("{\"message\": \"paciente no pudo ser registrado\"}");
+        } else {
+            Odontologo odontologoRegistrado=odontologoRepository.save(odontologo);
+            return odontologoRegistrado;
+        }
+
     }
 
     @Override
@@ -42,13 +52,24 @@ public class OdontologoService implements IOdontologoService {
     //Optional: Guarda dato si existe, y si no, guarda un nulo.
 
     @Override
-    public void actualizarOdontologo(Odontologo odontologo) {
-        odontologoRepository.save(odontologo); //Aqui NO actualizamos, solo reemplazamos la data de odontologo.
+    public void actualizarOdontologo(Odontologo odontologo) throws ResourceNotFoundException {
+        Optional<Odontologo> odontologoOptional=buscarOdontologoporID(odontologo.getId());
+        if (odontologoOptional.isPresent()) { //Si odontologoARetornar existe...
+            odontologoRepository.save(odontologo);// Entontes registras el resultado del opcional en un odontologo comun usando get por el optional
+        } else {
+            throw new ResourceNotFoundException("{\"message\": \"Odontologo no encontrado\"}");
+        }
+         //Aqui NO actualizamos, solo reemplazamos la data de odontologo.
     }
 
     @Override
-    public void eliminarOdontologo(Integer id) {
-        odontologoRepository.deleteById(id);
+    public void eliminarOdontologo(Integer id) throws ResourceNotFoundException {
+        Optional<Odontologo>  odontologoOptional = buscarOdontologoporID(id);
+        if (odontologoOptional.isPresent()) {
+            odontologoRepository.deleteById(id);
+        }else {
+            throw new ResourceNotFoundException("{\"message\": \"Odontologo no encontrad\"}");
+        }
     }
 
     //Metodos HQL

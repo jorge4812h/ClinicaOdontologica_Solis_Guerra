@@ -1,13 +1,17 @@
 package dh.backend.clinicamvc.test;
 
 import dh.backend.clinicamvc.entity.Odontologo;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
+import dh.backend.clinicamvc.service.impl.TurnoService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,12 +20,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class OdontologoTest {
 
     public static Logger LOGGER= LoggerFactory.getLogger(OdontologoTest.class);
 
-
+    @Autowired
     private OdontologoService odontologoService;
     private Odontologo odontologo;
 
@@ -35,7 +39,7 @@ class OdontologoTest {
 
     @Test
     @DisplayName("Registro de Odontologo")
-    void Test1(){
+    void Test1() throws BadRequestException {
         Odontologo odontologoRegistrado=odontologoService.registrarOdontologo(odontologo);
         assertNotNull(odontologoRegistrado);
     }

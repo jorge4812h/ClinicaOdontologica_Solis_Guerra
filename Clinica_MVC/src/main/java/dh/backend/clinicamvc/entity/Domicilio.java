@@ -3,13 +3,13 @@ package dh.backend.clinicamvc.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
-@Table(name = "domicilios")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+@Table(name = "domicilios")
 public class Domicilio {
 
     @Id
@@ -21,3 +21,5 @@ public class Domicilio {
     private String provincia;
 
 }
+
+

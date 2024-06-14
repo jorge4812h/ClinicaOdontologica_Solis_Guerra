@@ -2,6 +2,7 @@ package dh.backend.clinicamvc.test;
 
 import dh.backend.clinicamvc.entity.Domicilio;
 import dh.backend.clinicamvc.entity.Paciente;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.service.impl.PacienteService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,8 +49,7 @@ class PacienteTest {
     @Test
     @DisplayName("Testeo ingreso de paciente")
 
-    void TestPacienteGuardado(){
-
+    void TestPacienteGuardado() throws BadRequestException {
         Paciente pacienteRegistrado=pacienteService.registrarPaciente(paciente);
         assertNotNull(pacienteRegistrado);
     }
