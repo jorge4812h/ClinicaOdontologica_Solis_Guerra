@@ -3,6 +3,7 @@ package dh.backend.clinicamvc.controller;
 
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.entity.Paciente;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.IOdontologoService;
 import dh.backend.clinicamvc.service.IPacienteService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class VistaController {
     }
 
     @GetMapping("/buscarPaciente")
-    public String buscarPacientePorId(Model model, @RequestParam Integer id){
+    public String buscarPacientePorId(Model model, @RequestParam Integer id) throws ResourceNotFoundException {
         Optional<Paciente> paciente = pacienteService.buscarPorId(id);
             Paciente pacienteEncontrado=paciente.get();
             model.addAttribute("especialidad", "Paciente");
@@ -37,7 +38,7 @@ public class VistaController {
     }
 
     @GetMapping("/buscarOdontologo")
-    public String buscarOdontologoPorId(Model model, @RequestParam Integer id){
+    public String buscarOdontologoPorId(Model model, @RequestParam Integer id) throws ResourceNotFoundException {
         Optional<Odontologo> odontologo=odontologoService.buscarOdontologoporID(id);
             Odontologo odontologoARetornar=odontologo.get(); // Entontes registras el resultado del opcional en un odontologo comun usando get por el optional.
             model.addAttribute("especialidad","Paciente");

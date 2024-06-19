@@ -27,14 +27,11 @@ public class OdontologoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(odontologoService.registrarOdontologo(odontologo));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Odontologo> buscarOdontologoPorID(@PathVariable Integer id){
-        Optional<Odontologo> odontologo=odontologoService.buscarOdontologoporID(id); //Busco Odontologo y lo guardo en optional
-        if (odontologo.isPresent()) { //Si odontologoARetornar existe...
-            Odontologo odontologoARetornar=odontologo.get(); // Entontes registras el resultado del opcional en un odontologo comun usando get por el optional.
-            return ResponseEntity.ok(odontologoARetornar);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<Odontologo> buscarOdontologoPorID(@PathVariable Integer id) throws ResourceNotFoundException {
+        Optional<Odontologo> odontologoEncontrado=odontologoService.buscarOdontologoporID(id);
+        Odontologo odontologoADevolver=odontologoEncontrado.get();
+        return ResponseEntity.ok(odontologoADevolver);
+
     }
 
     @GetMapping
@@ -55,17 +52,13 @@ public class OdontologoController {
     }
 
     @GetMapping("/apellido/{apellido}")
-    public ResponseEntity<List<Odontologo>> buscarporApellido (@PathVariable String apellido){
+    public ResponseEntity<List<Odontologo>> buscarporApellido (@PathVariable String apellido) throws ResourceNotFoundException {
         return ResponseEntity.ok(odontologoService.buscarporApellido(apellido));
     }
 
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<List<Odontologo>> buscarporNombre(@PathVariable String nombre){
-        List<Odontologo> listadoOdontologos=odontologoService.buscarporNombre(nombre);
-        if (listadoOdontologos.size()>0) {
-            return ResponseEntity.ok(listadoOdontologos);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<List<Odontologo>> buscarporNombre(@PathVariable String nombre) throws ResourceNotFoundException {
+        List<Odontologo> listadoOdontologos = odontologoService.buscarporNombre(nombre);
+        return ResponseEntity.ok(listadoOdontologos);
     }
 }

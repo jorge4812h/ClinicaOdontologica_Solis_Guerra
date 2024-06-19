@@ -28,19 +28,14 @@ public class PacienteController {
 
     @GetMapping
     public ResponseEntity<List<Paciente>> buscarPacientes (){
-
         return ResponseEntity.ok(pacienteService.buscarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> buscarPacientePorID(@PathVariable Integer id){
-        Optional<Paciente> pacienteARetornar=pacienteService.buscarPorId(id);
-        if (pacienteARetornar.isPresent()) {
-            Paciente pacienteEncontrado=pacienteARetornar.get();
-            return ResponseEntity.ok(pacienteEncontrado);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<Paciente> buscarPacientePorID(@PathVariable Integer id) throws ResourceNotFoundException {
+        Optional<Paciente> pacienteEncontrado=pacienteService.buscarPorId(id);
+        Paciente pacienteADevolver=pacienteEncontrado.get();
+        return ResponseEntity.ok(pacienteADevolver);
     }
 
     @PutMapping

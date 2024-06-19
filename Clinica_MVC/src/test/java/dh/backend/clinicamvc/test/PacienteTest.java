@@ -3,6 +3,7 @@ package dh.backend.clinicamvc.test;
 import dh.backend.clinicamvc.entity.Domicilio;
 import dh.backend.clinicamvc.entity.Paciente;
 import dh.backend.clinicamvc.exception.BadRequestException;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.impl.PacienteService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ class PacienteTest {
     @Test
     @DisplayName("Testeo busqueda de paciente por id")
 
-    void TestBusquedaID(){
+    void TestBusquedaID() throws ResourceNotFoundException {
         Integer id=1;
         Optional<Paciente> pacienteOptional=pacienteService.buscarPorId(id);
         Paciente paciente1=pacienteOptional.get();

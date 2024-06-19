@@ -36,10 +36,20 @@ public class PacienteService implements IPacienteService {
         }
     }
 
-    public Optional<Paciente> buscarPorId(Integer id) {
-        return pacienteRepository.findById(id);
+    public Optional<Paciente> buscarPorId(Integer id) throws ResourceNotFoundException {
+        LOGGER.info("Busqueda de paciente...");
+        Optional<Paciente> pacienteARetornar=pacienteRepository.findById(id);
+        if (pacienteARetornar.isEmpty()) {
+            LOGGER.error("Paciente no encontrado.");
+            throw new ResourceNotFoundException("{\"message\": \"Paciente no encontrado\"}");
+        } else {
+            LOGGER.info("Paciente encontrado");
+            return pacienteARetornar;
+        }
 
     }
+
+
     public List<Paciente> buscarTodos() {
         return pacienteRepository.findAll();
     }
@@ -68,5 +78,4 @@ public class PacienteService implements IPacienteService {
             throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");
         }
     }
-
 }

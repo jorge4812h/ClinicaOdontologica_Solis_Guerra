@@ -13,12 +13,12 @@ public interface IOdontologoService {
 
     List<Odontologo> listarOdontologos();
 
-    Optional<Odontologo> buscarOdontologoporID(Integer id);
+    Optional<Odontologo> buscarOdontologoporID(Integer id) throws ResourceNotFoundException;
 
     void actualizarOdontologo(Odontologo odontologo) throws ResourceNotFoundException;
     void eliminarOdontologo(Integer id) throws ResourceNotFoundException;
 
-    List<Odontologo> buscarporApellido(String apellido);
+    List<Odontologo> buscarporApellido(String apellido) throws ResourceNotFoundException;
 
-    List<Odontologo> buscarporNombre(String nombre);
+    List<Odontologo> buscarporNombre(String nombre) throws ResourceNotFoundException;
 }
