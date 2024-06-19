@@ -3,6 +3,7 @@ package dh.backend.clinicamvc.service;
 import dh.backend.clinicamvc.dto.request.TurnoRequestDTO;
 import dh.backend.clinicamvc.dto.response.TurnoResponseDTO;
 import dh.backend.clinicamvc.exception.BadRequestException;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ public interface ITurnoService {
     TurnoResponseDTO buscarTurnoPorId(Integer id);
     List<TurnoResponseDTO> buscarTodosTurnos();
     void actualizarTurno(Integer id, TurnoRequestDTO turnoRequestDTO);
-    void eliminarTurno(Integer id);
+    void eliminarTurno(Integer id) throws ResourceNotFoundException;
 
     // HQL
     List<TurnoResponseDTO> buscarTurnoEntreFechas(LocalDate startDate, LocalDate endDate);

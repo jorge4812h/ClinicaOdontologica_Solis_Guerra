@@ -82,7 +82,7 @@ public class OdontologoService implements IOdontologoService {
         if (odontologoOptional.isPresent()) {
             odontologoRepository.deleteById(id);
         }else {
-            throw new ResourceNotFoundException("{\"message\": \"Odontologo no encontrad\"}");
+            throw new ResourceNotFoundException("{\"message\": \"Odontologo no encontrado\"}");
         }
     }
 
