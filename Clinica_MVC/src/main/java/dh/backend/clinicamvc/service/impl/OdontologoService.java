@@ -110,7 +110,6 @@ public class OdontologoService implements IOdontologoService {
             return odontologoEncontrado;
         }
     }
-
 }
 
 
