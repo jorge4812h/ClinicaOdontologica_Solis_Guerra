@@ -2,6 +2,7 @@ package dh.backend.clinicamvc.test;
 
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.exception.BadRequestException;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
 import dh.backend.clinicamvc.service.impl.TurnoService;
 import org.junit.jupiter.api.BeforeAll;
@@ -56,7 +57,7 @@ class OdontologoTest {
     @Test
     @DisplayName("Testo busqueda de Odontologos por ID")
 
-    void TestBusquedaID(){
+    void TestBusquedaID() throws ResourceNotFoundException {
         Integer id=1;
         Optional<Odontologo> odontologoEncontrado=odontologoService.buscarOdontologoporID(id);
         Odontologo odontologoARetornar=odontologoEncontrado.get();
