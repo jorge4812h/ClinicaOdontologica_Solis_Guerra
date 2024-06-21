@@ -25,5 +25,9 @@ public class Odontologo {
     @OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL) // Para mapear el atributo en la otra tabla
     @JsonIgnore
     private Set<Turno> turnoSet=new HashSet<>();
+    //name = Nombre tabla intermedia
+    //joinColumn= Entidad principal de la tabla
+    //inversJoinColum= la otra entidad de la relacion ManyToMany
+    //Elegimos la dueña de la relacion ManyToMany
 
 }

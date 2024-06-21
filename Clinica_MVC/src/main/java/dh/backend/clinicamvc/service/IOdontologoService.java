@@ -21,4 +21,5 @@ public interface IOdontologoService {
     List<Odontologo> buscarporApellido(String apellido) throws ResourceNotFoundException;
 
     List<Odontologo> buscarporNombre(String nombre) throws ResourceNotFoundException;
+
 }

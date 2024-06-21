@@ -61,4 +61,5 @@ public class OdontologoController {
         List<Odontologo> listadoOdontologos = odontologoService.buscarporNombre(nombre);
         return ResponseEntity.ok(listadoOdontologos);
     }
+
 }
